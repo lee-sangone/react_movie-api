@@ -14,7 +14,7 @@ const MoviePage = () => {
     console.log("movieList", movieList);
   }, [movieList]);
 
-  const handleSubmitKeyword = (e) => {
+  const handleSubmitKeyword = async (e) => {
     e.preventDefault();
     if (keyword.trim() === "") {
       alert("검색어를 입력해주세요.");
@@ -26,7 +26,7 @@ const MoviePage = () => {
     //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
     // );
 
-    fetch(
+    await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword.trim()}`,
       {
         method: "GET",
