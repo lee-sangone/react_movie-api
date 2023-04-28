@@ -1,37 +1,89 @@
-import logo from "./logo.svg";
-import "./App.css";
+import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 
-function App() {
-  const [image, setImage] = useState({ heroImage: "", image: "" });
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "554bd53ecdmsh7f80505d4814a44p114b4bjsn09bbcc73d52f",
-      "X-RapidAPI-Host": "transfermarket.p.rapidapi.com",
-    },
+const API_KEY = "38e573123051e1013744bb409ca78d43";
+const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+const MoviePage = () => {
+  const [keyword, setKeyword] = useState("");
+  const [movieList, setMovieList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("movieList", movieList);
+  }, [movieList]);
+
+  const handleSubmitKeyword = (e) => {
+    e.preventDefault();
+    if (keyword.trim() === "") {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+    setIsLoading(true);
+
+    // const { data } = await axios.get(
+    //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
+    // );
+
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword.trim()}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        setMovieList(res.results);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      });
   };
 
-  fetch(
-    "https://transfermarket.p.rapidapi.com/clubs/get-squad?id=631&saison_id=2022&domain=de",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      if (response?.squad?.length !== 0 && response?.squad !== undefined) {
-        setImage({
-          heroImage: response.squad[0].heroImage,
-          image: response.squad[0].image,
-        });
-      }
-    })
-    .catch((err) => console.error(err));
+  const handleChangeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <img src={image.heroImage} />
-      <img src={image.image} />
+    <div>
+      <h1>영화 페이지</h1>
+      <div>
+        <form onSubmit={handleSubmitKeyword}>
+          <input
+            value={keyword}
+            onChange={handleChangeKeyword}
+            placeholder="영화 제목"
+          />
+          <button type="submit">검색</button>
+        </form>
+      </div>
+      <div>
+        {isLoading ? (
+          <div>로딩중....</div>
+        ) : (
+          <ul>
+            {movieList.map(
+              ({ id, title, poster_path, release_date }, index) => (
+                <li key={`${id}_${index}`}>
+                  <div>{title}</div>
+                  {poster_path ? (
+                    <img src={`${IMG_BASE_URL}${poster_path}`} />
+                  ) : (
+                    <div>이미지 없음</div>
+                  )}
+                  <div>{release_date}</div>
+                </li>
+              )
+            )}
+          </ul>
+        )}
+        {!movieList.length && keyword && <div>검색 결과 없음.</div>}
+      </div>
     </div>
   );
-}
+};
 
-export default App;
+export default MoviePage;
