@@ -66,7 +66,10 @@ const MoviePage = () => {
         ) : (
           <ul>
             {movieList.map(
-              ({ id, title, poster_path, release_date }, index) => (
+              (
+                { id, title, poster_path, release_date, vote_average },
+                index
+              ) => (
                 <li key={`${id}_${index}`}>
                   <div>{title}</div>
                   {poster_path ? (
@@ -74,13 +77,13 @@ const MoviePage = () => {
                   ) : (
                     <div>이미지 없음</div>
                   )}
-                  <div>{release_date}</div>
+                  <div>출시일 : {release_date}</div>
+                  <div>평점 : {vote_average}</div>
                 </li>
               )
             )}
           </ul>
         )}
-        {!movieList.length && keyword && <div>검색 결과 없음.</div>}
       </div>
     </div>
   );
