@@ -49,7 +49,7 @@ const MoviePage = () => {
 
   return (
     <div>
-      <h1>영화 페이지</h1>
+      <h1>영화 검색 페이지</h1>
       <div>
         <form onSubmit={handleSubmitKeyword}>
           <input
