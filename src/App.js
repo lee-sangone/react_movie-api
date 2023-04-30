@@ -57,6 +57,14 @@ const MoviePage = () => {
             onChange={handleChangeKeyword}
             placeholder="영화 제목"
           />
+          <select>
+            <option value={7.0}>7.0 이상</option>
+            <option value={7.5}>7.5 이상</option>
+            <option value={8.0}>8.0 이상</option>
+            <option value={8.5}>8.5 이상</option>
+            <option value={9.0}>9.0 이상</option>
+            <option value={9.5}>9.5 이상</option>
+          </select>
           <button type="submit">검색</button>
         </form>
       </div>
