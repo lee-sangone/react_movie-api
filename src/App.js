@@ -9,6 +9,7 @@ const MoviePage = () => {
   const [keyword, setKeyword] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     console.log("movieList", movieList);
@@ -47,6 +48,10 @@ const MoviePage = () => {
     setKeyword(e.target.value);
   };
 
+  const handleChangeRating = (e) => {
+    setRating(e.target.value);
+  };
+
   return (
     <div>
       <h1>영화 검색 페이지</h1>
@@ -57,7 +62,8 @@ const MoviePage = () => {
             onChange={handleChangeKeyword}
             placeholder="영화 제목"
           />
-          <select>
+          <select value={rating} onChange={handleChangeRating}>
+            <option value={0}>선택안함</option>
             <option value={7.0}>7.0 이상</option>
             <option value={7.5}>7.5 이상</option>
             <option value={8.0}>8.0 이상</option>
@@ -77,18 +83,21 @@ const MoviePage = () => {
               (
                 { id, title, poster_path, release_date, vote_average },
                 index
-              ) => (
-                <li key={`${id}_${index}`}>
-                  <div>{title}</div>
-                  {poster_path ? (
-                    <img src={`${IMG_BASE_URL}${poster_path}`} />
-                  ) : (
-                    <div>이미지 없음</div>
-                  )}
-                  <div>출시일 : {release_date}</div>
-                  <div>평점 : {vote_average}</div>
-                </li>
-              )
+              ) => {
+                if (rating <= vote_average)
+                  return (
+                    <li key={`${id}_${index}`}>
+                      <div>{title}</div>
+                      {poster_path ? (
+                        <img src={`${IMG_BASE_URL}${poster_path}`} />
+                      ) : (
+                        <div>이미지 없음</div>
+                      )}
+                      <div>출시일 : {release_date}</div>
+                      <div>평점 : {vote_average}</div>
+                    </li>
+                  );
+              }
             )}
           </ul>
         )}
