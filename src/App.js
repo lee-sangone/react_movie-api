@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -13,6 +12,13 @@ const MoviePage = () => {
 
   useEffect(() => {
     console.log("movieList", movieList);
+  }, [movieList]);
+
+  useEffect(() => {
+    const tempMovieList = movieList.filter(
+      (rating, vote_average) => rating <= vote_average
+    );
+    setMovieList(tempMovieList);
   }, [movieList]);
 
   const handleSubmitKeyword = async (e) => {
@@ -82,21 +88,20 @@ const MoviePage = () => {
               (
                 { id, title, poster_path, release_date, vote_average },
                 index
-              ) => {
-                if (rating <= vote_average)
-                  return (
-                    <li key={`${id}_${index}`}>
-                      <div>{title}</div>
-                      {poster_path ? (
-                        <img src={`${IMG_BASE_URL}${poster_path}`} />
-                      ) : (
-                        <div>이미지 없음</div>
-                      )}
-                      <div>출시일 : {release_date}</div>
-                      <div>평점 : {vote_average}</div>
-                    </li>
-                  );
-              }
+              ) => (
+                // if (rating <= vote_average)
+                //   return (
+                <li key={`${id}_${index}`}>
+                  <div>{title}</div>
+                  {poster_path ? (
+                    <img src={`${IMG_BASE_URL}${poster_path}`} />
+                  ) : (
+                    <div>이미지 없음</div>
+                  )}
+                  <div>출시일 : {release_date}</div>
+                  <div>평점 : {vote_average}</div>
+                </li>
+              )
             )}
           </ul>
         )}
