@@ -15,11 +15,13 @@ const MoviePage = () => {
   }, [movieList]);
 
   useEffect(() => {
-    const tempMovieList = movieList.filter(
-      (rating, vote_average) => rating <= vote_average
-    );
-    setMovieList(tempMovieList);
-  }, [movieList]);
+    if (rating !== 0) {
+      const tempMovieList = movieList.filter(
+        ({ vote_average }) => rating <= vote_average
+      );
+      setMovieList(tempMovieList);
+    }
+  }, [rating]);
 
   const handleSubmitKeyword = async (e) => {
     e.preventDefault();
