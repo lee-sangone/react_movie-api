@@ -14,14 +14,14 @@ const MoviePage = () => {
     console.log("movieList", movieList);
   }, [movieList]);
 
-  useEffect(() => {
-    if (rating !== 0) {
-      const tempMovieList = movieList.filter(
-        ({ vote_average }) => rating <= vote_average
-      );
-      setMovieList(tempMovieList);
-    }
-  }, [rating]);
+  // useEffect(() => {
+  //   if (rating !== 0) {
+  //     const tempMovieList = movieList.filter(
+  //       ({ vote_average }) => rating <= vote_average
+  //     );
+  //     setMovieList(tempMovieList);
+  //   }
+  // }, [rating]); 질문 : 검색 이후 option 변경시 작동하지 않음
 
   const handleSubmitKeyword = async (e) => {
     e.preventDefault();
@@ -90,20 +90,21 @@ const MoviePage = () => {
               (
                 { id, title, poster_path, release_date, vote_average },
                 index
-              ) => (
-                // if (rating <= vote_average)
-                //   return (
-                <li key={`${id}_${index}`}>
-                  <div>{title}</div>
-                  {poster_path ? (
-                    <img src={`${IMG_BASE_URL}${poster_path}`} />
-                  ) : (
-                    <div>이미지 없음</div>
-                  )}
-                  <div>출시일 : {release_date}</div>
-                  <div>평점 : {vote_average}</div>
-                </li>
-              )
+              ) => {
+                if (rating <= vote_average)
+                  return (
+                    <li key={`${id}_${index}`}>
+                      <div>{title}</div>
+                      {poster_path ? (
+                        <img src={`${IMG_BASE_URL}${poster_path}`} />
+                      ) : (
+                        <div>이미지 없음</div>
+                      )}
+                      <div>출시일 : {release_date}</div>
+                      <div>평점 : {vote_average}</div>
+                    </li>
+                  );
+              }
             )}
           </ul>
         )}
