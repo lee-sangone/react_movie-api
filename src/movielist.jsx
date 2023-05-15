@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
 const API_KEY = "38e573123051e1013744bb409ca78d43";
@@ -9,7 +9,7 @@ const MoviePage = () => {
   const [keyword, setKeyword] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [rating, setRating] = useState(0);
-  const [testFetch, setTestFetch] = useState({ keyword: "", rating: 0 });
+
   useEffect(() => {
     console.log("movieList", movieList);
   }, [movieList]);
@@ -30,38 +30,17 @@ const MoviePage = () => {
       alert("검색어를 입력해주세요.");
       return;
     }
-    setTestFetch({ keyword, rating });
 
-    // const { data } = await axios
-    //   .get(
-    //     `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
-    //   )
-    //   .then(
-    //     setTimeout(() => {
-    //       console.log("test");
-    //     }, 3000)
-    //   );
-    // setMovieList(data.results);
-
-    // .then((res) => {
-    //   setMovieList(res.data.results);
-    // });
-
-    // await fetch(
-    //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword.trim()}`,
-    //   {
-    //     method: "GET",
-    //   }
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    // .then((res) => {
-    //   setMovieList(res.results);
-    //   setTimeout(() => {
-    //     setIsLoading(false);
-    //   }, 3000);
-    // });
+    const { data } = await axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
+      )
+      .then(
+        setTimeout(() => {
+          console.log("test");
+        }, 3000)
+      );
+    setMovieList(data.results);
   };
 
   const handleChangeKeyword = (e) => {
@@ -93,15 +72,8 @@ const MoviePage = () => {
           <button type="submit">검색</button>
         </form>
       </div>
-      <Suspense fallback={<div>로딩중....</div>}>
-        <MovieFetch
-          setMovieList={setMovieList}
-          testFetch={testFetch}
-          movieList={movieList}
-        />
-      </Suspense>
 
-      {/* <div>
+      <div>
         <ul>
           {movieList.map(
             ({ id, title, poster_path, release_date, vote_average }, index) => {
@@ -121,46 +93,7 @@ const MoviePage = () => {
             }
           )}
         </ul>
-      </div> */}
-    </div>
-  );
-};
-const MovieFetch = ({ testFetch, setMovieList, movieList }) => {
-  const fetchData = async () => {
-    if (testFetch.keyword.trim() === "") return;
-    const { data } = await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${testFetch.keyword}`
-      )
-      .then(
-        setTimeout(() => {
-          console.log("test");
-        }, 3000)
-      );
-    setMovieList(data.results);
-  };
-  fetchData();
-  return (
-    <div>
-      <ul>
-        {movieList.map(
-          ({ id, title, poster_path, release_date, vote_average }, index) => {
-            if (testFetch.rating <= vote_average)
-              return (
-                <li key={`${id}_${index}`}>
-                  <div>{title}</div>
-                  {poster_path ? (
-                    <img src={`${IMG_BASE_URL}${poster_path}`} />
-                  ) : (
-                    <div>이미지 없음</div>
-                  )}
-                  <div>출시일 : {release_date}</div>
-                  <div>평점 : {vote_average}</div>
-                </li>
-              );
-          }
-        )}
-      </ul>
+      </div>
     </div>
   );
 };
