@@ -1,16 +1,12 @@
 import { Suspense, lazy } from "react";
+import MoviePage from "./movielist";
+import { Route, Router, Routes } from "react-router-dom";
 
-const MoviePage = lazy(() => {
-  return Promise.all([
-    import("./movielist"),
-    new Promise((resolve) => setTimeout(resolve, 4000)),
-  ]).then(([moduleExports]) => moduleExports);
-});
 const App = () => {
   return (
-    <Suspense fallback={<div>로딩중...</div>}>
-      <MoviePage />
-    </Suspense>
+    <Routes>
+      <Route path="/movielist" element={<MoviePage />} />
+    </Routes>
   );
 };
 

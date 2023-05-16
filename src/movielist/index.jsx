@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import "./index.css";
 
 const API_KEY = "38e573123051e1013744bb409ca78d43";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
