@@ -32,15 +32,9 @@ const MoviePage = () => {
       return;
     }
 
-    const { data } = await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
-      )
-      .then(
-        setTimeout(() => {
-          console.log("test");
-        }, 3000)
-      );
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
+    );
     setMovieList(data.results);
   };
 
