@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import "./index.css";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 const API_KEY = "38e573123051e1013744bb409ca78d43";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -10,6 +11,7 @@ const MoviePage = () => {
   const [keyword, setKeyword] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [rating, setRating] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("movieList", movieList);
@@ -32,10 +34,24 @@ const MoviePage = () => {
       return;
     }
 
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
-    );
-    setMovieList(data.results);
+    await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer 38e573123051e1013744bb409ca78d43",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => setMovieList(res.results))
+      .catch((err) => console.error(err));
+
+    //   const { data } = await axios.get(
+    //     `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
+    //   );
+    //   setMovieList(data.results);
   };
 
   const handleChangeKeyword = (e) => {
@@ -77,7 +93,12 @@ const MoviePage = () => {
                   <li key={`${id}_${index}`}>
                     <div>{title}</div>
                     {poster_path ? (
-                      <img src={`${IMG_BASE_URL}${poster_path}`} />
+                      <img
+                        src={`${IMG_BASE_URL}${poster_path}`}
+                        onClick={() => {
+                          navigate("/moviedetail");
+                        }}
+                      />
                     ) : (
                       <div>이미지 없음</div>
                     )}
