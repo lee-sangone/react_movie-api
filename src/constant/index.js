@@ -1,0 +1,3 @@
+export const API_KEY =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYWM3ODEzMWY5ZTI2MzMzNjA3N2QyZWY0YTQ4ZWFiOCIsInN1YiI6IjY0NGI5YmQ0MzM2ZTAxMDRlZDczNTA2NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pCg6aA9u4mnycKbZGA7YyXYYTQYQzILDF1ne3UKNS28";
+export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";

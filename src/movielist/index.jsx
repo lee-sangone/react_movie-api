@@ -3,9 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "./index.css";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-
-const API_KEY = "38e573123051e1013744bb409ca78d43";
-const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
+import { API_KEY, IMG_BASE_URL } from "../constant";
 
 const MoviePage = () => {
   const [keyword, setKeyword] = useState("");
@@ -34,24 +32,30 @@ const MoviePage = () => {
       return;
     }
 
-    await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`,
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: "Bearer 38e573123051e1013744bb409ca78d43",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => setMovieList(res.results))
-      .catch((err) => console.error(err));
+    // await fetch(
+    //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       accept: "application/json",
+    //       Authorization: "Bearer 38e573123051e1013744bb409ca78d43",
+    //     },
+    //   }
+    // )
+    //   .then((res) => res.json())
+    //   .then((res) => setMovieList(res.results))
+    //   .catch((err) => console.error(err));
 
-    //   const { data } = await axios.get(
-    //     `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${keyword}`
-    //   );
-    //   setMovieList(data.results);
+    const { data } = await axios
+      .get(`https://api.themoviedb.org/3/search/movie?query=${keyword}`, {
+        headers: {
+          Authorization: API_KEY,
+        },
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setMovieList(data.results);
   };
 
   const handleChangeKeyword = (e) => {
@@ -96,7 +100,7 @@ const MoviePage = () => {
                       <img
                         src={`${IMG_BASE_URL}${poster_path}`}
                         onClick={() => {
-                          navigate("/moviedetail");
+                          navigate(`/detail/${id}`);
                         }}
                       />
                     ) : (
