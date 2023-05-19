@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import "./index.css";
+import "./list.css";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { API_KEY, IMG_BASE_URL } from "../constant";
 

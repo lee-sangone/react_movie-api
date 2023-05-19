@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import MoviePage from "./movielist";
+import MoviePage from "./movielist/list";
 import { Route, Router, Routes } from "react-router-dom";
 import DetailPage from "./moviedetail/detail";
 
