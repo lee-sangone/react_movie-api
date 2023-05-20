@@ -7,7 +7,14 @@ const App = () => {
   return (
     <Routes>
       <Route path="/movielist" element={<MoviePage />} />
-      <Route path="/detail/:id" element={<DetailPage />} />
+      <Route
+        path="/detail/:id"
+        element={
+          <Suspense fallback={<div>로딩중...</div>}>
+            <DetailPage />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };
