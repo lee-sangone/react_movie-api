@@ -68,15 +68,23 @@ const MoviePage = () => {
 
   return (
     <div>
-      <h1>영화 검색 페이지</h1>
-      <div>
-        <form onSubmit={handleSubmitKeyword}>
+      <h1 className="page_title">영화 검색 페이지</h1>
+      <div className="list_search_container">
+        <form
+          onSubmit={handleSubmitKeyword}
+          className="search_option_container"
+        >
           <input
             value={keyword}
             onChange={handleChangeKeyword}
             placeholder="영화 제목"
+            className="search_keyword"
           />
-          <select value={rating} onChange={handleChangeRating}>
+          <select
+            value={rating}
+            onChange={handleChangeRating}
+            className="search_rating"
+          >
             <option value={0}>선택안함</option>
             <option value={7.0}>7.0 이상</option>
             <option value={7.5}>7.5 이상</option>
@@ -84,18 +92,20 @@ const MoviePage = () => {
             <option value={8.5}>8.5 이상</option>
             <option value={9.0}>9.0 이상</option>
           </select>
-          <button type="submit">검색</button>
+          <button type="submit" className="search_submit">
+            검색
+          </button>
         </form>
       </div>
 
-      <div>
-        <ul>
+      <div className="movie_list_container">
+        <ul className="movie_list">
           {movieList.map(
             ({ id, title, poster_path, release_date, vote_average }, index) => {
               if (rating <= vote_average)
                 return (
                   <li key={`${id}_${index}`}>
-                    <div>{title}</div>
+                    <div className="list_title">{title}</div>
                     {poster_path ? (
                       <img
                         src={`${IMG_BASE_URL}${poster_path}`}
@@ -104,10 +114,12 @@ const MoviePage = () => {
                         }}
                       />
                     ) : (
-                      <div>이미지 없음</div>
+                      <div className="list_no_img">이미지 없음</div>
                     )}
-                    <div>출시일 : {release_date}</div>
-                    <div>평점 : {vote_average}</div>
+                    <div className="list_release_date">
+                      출시일 : {release_date}
+                    </div>
+                    <div className="list_rating">평점 : {vote_average}</div>
                   </li>
                 );
             }
