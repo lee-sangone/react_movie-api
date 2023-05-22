@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { API_KEY } from "../constant";
 import { Suspense, useEffect, useState } from "react";
 import useGetData from "../hooks/useGetData";
+import "./detail.css";
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const DetailPage = () => {
 
   return (
     // <Suspense fallback={<div>로딩중...</div>}>
-    <div>
+    <div className="detail_container">
       {/* {detailData.map(
           (
             { tagline, overview, release_date, runtime, title, id },
@@ -55,11 +56,15 @@ const DetailPage = () => {
       {!detailData && <div>정보 없음</div>}
       {detailData && (
         <>
-          <div>{detailData.title}</div>
-          <div>{detailData.tagline}</div>
-          <div>상영시간 : {detailData.runtime} 분</div>
-          <div>출시일 : {detailData.release_date}</div>
-          <div>줄거리 : {detailData.overview}</div>
+          <div className="detail_title">{detailData.title}</div>
+          <div className="detail_tagline">{detailData.tagline}</div>
+          <div className="detail_runtime">
+            상영시간 : {detailData.runtime} 분
+          </div>
+          <div className="detail_release_date">
+            출시일 : {detailData.release_date}
+          </div>
+          <div className="detail_overview">줄거리 : {detailData.overview}</div>
         </>
       )}
     </div>
