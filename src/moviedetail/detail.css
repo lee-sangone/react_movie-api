@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Bebas Neue", sans-serif;
+  src: url("https://fonts.googleapis.com/css2?family=Arimo&family=Bebas+Neue&display=swap");
+}
+
+.detail_title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 100px;
+}
+
+.detail_tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail_overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.detail_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
