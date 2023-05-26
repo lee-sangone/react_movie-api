@@ -67,7 +67,7 @@ const MoviePage = () => {
   };
 
   return (
-    <div>
+    <div className="page_container">
       <h1 className="page_title">영화 검색 페이지</h1>
       <div className="list_search_container">
         <form
@@ -104,22 +104,25 @@ const MoviePage = () => {
             ({ id, title, poster_path, release_date, vote_average }, index) => {
               if (rating <= vote_average)
                 return (
-                  <li key={`${id}_${index}`}>
-                    <div className="list_title">{title}</div>
-                    {poster_path ? (
-                      <img
-                        src={`${IMG_BASE_URL}${poster_path}`}
-                        onClick={() => {
-                          navigate(`/detail/${id}`);
-                        }}
-                      />
-                    ) : (
-                      <div className="list_no_img">이미지 없음</div>
-                    )}
-                    <div className="list_release_date">
-                      출시일 : {release_date}
+                  <li key={`${id}_${index}`} className="movie_list_item">
+                    <div className="contents_container">
+                      <div className="list_title">{title}</div>
+                      {poster_path ? (
+                        <img
+                          className="list_img"
+                          src={`${IMG_BASE_URL}${poster_path}`}
+                          onClick={() => {
+                            navigate(`/detail/${id}`);
+                          }}
+                        />
+                      ) : (
+                        <div className="list_no_img">이미지 없음</div>
+                      )}
+                      <div className="list_release_date">
+                        출시일 : {release_date}
+                      </div>
+                      <div className="list_rating">평점 : {vote_average}</div>
                     </div>
-                    <div className="list_rating">평점 : {vote_average}</div>
                   </li>
                 );
             }
