@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import { API_KEY, IMG_BASE_URL } from "../constant";
-import { useState } from "react";
+import { API_KEY } from "../constant";
 import useGetData from "../hooks/useGetData";
 import "./detail.css";
 
@@ -11,7 +10,6 @@ const DetailPage = () => {
       Authorization: API_KEY,
     },
   });
-  const [_status, _setStatus] = useState("");
 
   console.log(detailData);
   // useEffect(() => {
