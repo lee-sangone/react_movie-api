@@ -68,7 +68,7 @@ const MoviePage = () => {
 
   return (
     <div className="page_container">
-      <h1 className="page_title">영화 검색 페이지</h1>
+      <h1 className="page_title">Search the Movie</h1>
       <div className="list_search_container">
         <form
           onSubmit={handleSubmitKeyword}

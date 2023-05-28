@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { API_KEY } from "../constant";
-import { Suspense, useEffect, useState } from "react";
+import { API_KEY, IMG_BASE_URL } from "../constant";
+import { useState } from "react";
 import useGetData from "../hooks/useGetData";
 import "./detail.css";
 
@@ -53,18 +52,15 @@ const DetailPage = () => {
             </li>
           )
         )} */}
-      {!detailData && <div>정보 없음</div>}
+
       {detailData && (
         <>
           <div className="detail_title">{detailData.title}</div>
           <div className="detail_tagline">{detailData.tagline}</div>
-          <div className="detail_overview">줄거리 : {detailData.overview}</div>
           <div className="detail_info">
+            <div className="detail_overview">{detailData.overview}</div>
             <div className="detail_runtime">
-              상영시간 : {detailData.runtime} 분
-            </div>
-            <div className="detail_release_date">
-              출시일 : {detailData.release_date}
+              {detailData.release_date} / {detailData.runtime} minutes
             </div>
           </div>
         </>
